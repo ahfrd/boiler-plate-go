@@ -24,7 +24,8 @@ func (r *authRepository) Login(request *request.LoginRequest) (*response.LoginRe
 	if err != nil {
 		return nil, err
 	}
-	var query string = fmt.Sprintf(`select username from user where username = "%s"`, request.Username)
+
+	var query string = fmt.Sprintf(`SELECT username,password FROM 	authentication WHERE username = "%s"`, request.Username)
 	db.QueryRow(query).Scan(
 		&username,
 		&password,

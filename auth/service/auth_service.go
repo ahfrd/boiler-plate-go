@@ -38,6 +38,8 @@ func (s *AuthService) Login(ctx *gin.Context, params *request.LoginRequest, uid 
 			Msg:  err.Error(),
 		}, nil
 	}
+	fmt.Println("13123;213;'12;3';")
+	fmt.Println(selectUsername.Password)
 	if selectUsername.Password != hash_str {
 		return &response.GeneralResponse{
 			Code: "400",
@@ -75,6 +77,5 @@ func (s *AuthService) Login(ctx *gin.Context, params *request.LoginRequest, uid 
 	return &response.GeneralResponse{
 		Code: "200",
 		Msg:  "Sukses",
-		Data: params,
 	}, nil
 }
