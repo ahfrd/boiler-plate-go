@@ -5,7 +5,6 @@ import (
 	"asia-quest/entity/request"
 	"asia-quest/entity/response"
 	"asia-quest/helpers"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -69,10 +68,19 @@ func (s *BooksService) Create(ctx *gin.Context, params *request.CreateRequest, u
 		// })
 		// return
 	}
-	fmt.Println(",.,.,.,3123")
-	fmt.Println(tkn.Signature)
-	fmt.Println("---")
-	fmt.Println(tkn.Claims)
+	userJwt, err := helpers.JwtSplit(tokenJwt)
+	if err != nil {
+		return &response.GeneralResponse{
+			Code: "400",
+			Msg:  err.Error(),
+		}, nil
+	}
+	if userJwt != params.Username {
+		return &response.GeneralResponse{
+			Code: "400",
+			Msg:  "token not valid",
+		}, nil
+	}
 
 	params.Price = helpers.FormatIdr(params.Price)
 	createUser := s.BooksRepository.Create(params)
@@ -134,6 +142,19 @@ func (s *BooksService) Read(ctx *gin.Context, params *request.ReadRequest, uid s
 		// 	"msg":  "Token Not Valid",
 		// })
 		// return
+	}
+	userJwt, err := helpers.JwtSplit(tokenJwt)
+	if err != nil {
+		return &response.GeneralResponse{
+			Code: "400",
+			Msg:  err.Error(),
+		}, nil
+	}
+	if userJwt != params.Username {
+		return &response.GeneralResponse{
+			Code: "400",
+			Msg:  "token not valid",
+		}, nil
 	}
 	getBooks, err := s.BooksRepository.Read(params)
 	if err != nil {
@@ -222,7 +243,19 @@ func (s *BooksService) Update(ctx *gin.Context, params *request.UpdateRequest, u
 		// })
 		// return
 	}
-
+	userJwt, err := helpers.JwtSplit(tokenJwt)
+	if err != nil {
+		return &response.GeneralResponse{
+			Code: "400",
+			Msg:  err.Error(),
+		}, nil
+	}
+	if userJwt != params.Username {
+		return &response.GeneralResponse{
+			Code: "400",
+			Msg:  "token not valid",
+		}, nil
+	}
 	params.Price = helpers.FormatIdr(params.Price)
 
 	updateBooks := s.BooksRepository.Update(params)
@@ -283,6 +316,19 @@ func (s *BooksService) Delete(ctx *gin.Context, params *request.DeleteRequest, u
 		// 	"msg":  "Token Not Valid",
 		// })
 		// return
+	}
+	userJwt, err := helpers.JwtSplit(tokenJwt)
+	if err != nil {
+		return &response.GeneralResponse{
+			Code: "400",
+			Msg:  err.Error(),
+		}, nil
+	}
+	if userJwt != params.Username {
+		return &response.GeneralResponse{
+			Code: "400",
+			Msg:  "token not valid",
+		}, nil
 	}
 	delete := s.BooksRepository.Delete(params)
 	if delete != nil {

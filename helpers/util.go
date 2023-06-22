@@ -7,7 +7,9 @@ import (
 	"crypto/x509"
 	"encoding/base64"
 	"encoding/hex"
+	"encoding/json"
 	"encoding/pem"
+	"errors"
 	"fmt"
 	"log"
 	"math"
@@ -18,6 +20,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/golang-jwt/jwt"
 	"golang.org/x/text/message"
 )
 
@@ -206,4 +209,39 @@ func FormatIdr(price string) string {
 func JwtKey() []byte {
 	var jwtKey = []byte("secret_key")
 	return jwtKey
+}
+
+func JwtSplit(tokenString string) (string, error) {
+	tokenParts := strings.Split(tokenString, ".")
+	if len(tokenParts) != 3 {
+		fmt.Println("Invalid token format")
+		return "", errors.New("Invalid token format")
+	}
+
+	// Decode the payload (second part of the token)
+	payload, err := jwt.DecodeSegment(tokenParts[1])
+	if err != nil {
+		fmt.Println("Failed to decode payload:", err)
+		return "", errors.New("Failed to decode payload")
+
+	}
+
+	// Create a map to hold the claims
+	claims := make(map[string]interface{})
+
+	// Unmarshal the payload into the claims map
+	if err := json.Unmarshal(payload, &claims); err != nil {
+		fmt.Println("Failed to unmarshal payload:", err)
+		return "", errors.New("Failed to unmarshal payload:")
+
+	}
+
+	// Retrieve the username from the claims
+	username, ok := claims["username"].(string)
+	if !ok {
+		fmt.Println("Invalid username claim")
+		return "", errors.New("Invalid username claim")
+
+	}
+	return username, nil
 }

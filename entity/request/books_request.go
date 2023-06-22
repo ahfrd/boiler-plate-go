@@ -1,6 +1,7 @@
 package request
 
 type CreateRequest struct {
+	Username    string         `json:"username"`
 	Title       string         `json:"title"`
 	Description string         `json:"description"`
 	Category    []CategoryBook `json:"category"`
@@ -11,6 +12,7 @@ type CreateRequest struct {
 }
 
 type UpdateRequest struct {
+	Username    string         `json:"username"`
 	Id          string         `json:"id"`
 	Title       string         `json:"title"`
 	Description string         `json:"description"`
@@ -24,11 +26,13 @@ type IdArrayRequest struct {
 	Data string `json:"data"`
 }
 type DeleteRequest struct {
-	Id []IdArrayRequest `json:"id"`
+	Username string           `json:"username"`
+	Id       []IdArrayRequest `json:"id"`
 }
 
 type ReadRequest struct {
-	Id string `json:"id"`
+	Username string `json:"username"`
+	Id       string `json:"id"`
 }
 
 type CategoryBook struct {
