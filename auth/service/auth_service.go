@@ -47,10 +47,8 @@ func (s *AuthService) Login(ctx *gin.Context, params *request.LoginRequest, uid 
 		}, nil
 	}
 
-	layoutFormat := "2006-01-02 15:04:05"
-	strtime, _ := time.Parse(layoutFormat, time.Now().String())
-	sessionMaxTime := strtime.Add(time.Minute * 30)
-
+	sessionMaxTime := time.Now().Add(time.Minute * 30)
+	fmt.Println(sessionMaxTime)
 	claims := &request.Claims{
 		Username: selectUsername.Username,
 		StandardClaims: jwt.StandardClaims{

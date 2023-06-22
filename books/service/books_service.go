@@ -5,6 +5,7 @@ import (
 	"asia-quest/entity/request"
 	"asia-quest/entity/response"
 	"asia-quest/helpers"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -68,6 +69,11 @@ func (s *BooksService) Create(ctx *gin.Context, params *request.CreateRequest, u
 		// })
 		// return
 	}
+	fmt.Println(",.,.,.,3123")
+	fmt.Println(tkn.Signature)
+	fmt.Println("---")
+	fmt.Println(tkn.Claims)
+
 	params.Price = helpers.FormatIdr(params.Price)
 	createUser := s.BooksRepository.Create(params)
 	if createUser != nil {
@@ -267,7 +273,6 @@ func (s *BooksService) Delete(ctx *gin.Context, params *request.DeleteRequest, u
 		// })
 		// return
 	}
-
 	if !tkn.Valid {
 		return &response.GeneralResponse{
 			Code: "400",
