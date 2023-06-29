@@ -21,17 +21,19 @@ import (
 )
 
 type AuthService struct {
-	OauthConfig    oauth2.Config
-	AuthRepository entity.AuthRepository
+	OauthConfigGoogle oauth2.Config
+	OauthConfigApple  oauth2.Config
+	AuthRepository    entity.AuthRepository
 }
 type Email struct {
 	Email string `json:"email"`
 }
 
-func NewAuthService(authRepository *entity.AuthRepository, oauthConfig *oauth2.Config) entity.AuthService {
+func NewAuthService(authRepository *entity.AuthRepository, oauthConfigGoogle *oauth2.Config, oauthConfigApple *oauth2.Config) entity.AuthService {
 	return &AuthService{
-		AuthRepository: *authRepository,
-		OauthConfig:    *oauthConfig,
+		AuthRepository:    *authRepository,
+		OauthConfigGoogle: *oauthConfigGoogle,
+		OauthConfigApple:  *oauthConfigApple,
 	}
 }
 
@@ -88,35 +90,69 @@ func (s *AuthService) Login(ctx *gin.Context, params *request.LoginRequest, uid 
 }
 
 func (s *AuthService) OauthLogin(ctx *gin.Context, uid string) (string, error) {
-
-	url := s.OauthConfig.AuthCodeURL(uid)
+	chId := "ANDROID"
+	var url string
+	if chId == "ANDROID" {
+		url = s.OauthConfigGoogle.AuthCodeURL(uid)
+	} else if chId == "IOS" {
+		url = s.OauthConfigApple.AuthCodeURL(uid)
+	}
 	return url, nil
 }
 func (s *AuthService) OauthCallback(ctx *gin.Context, code string, state string) error {
-	token, err := s.OauthConfig.Exchange(context.Background(), code)
-	if err != nil {
-		return err
-	}
-	client := oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(token))
-	response, err := client.Get("https://www.googleapis.com/oauth2/v2/userinfo")
-	if err != nil {
-		return err
-	}
-	fmt.Println(response.Body)
-	fmt.Println("././././")
-	fmt.Println(response)
+	chId := "ANDROID"
+	if chId == "ANDROID" {
+		token, err := s.OauthConfigGoogle.Exchange(context.Background(), code)
+		if err != nil {
+			return err
+		}
+		client := oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(token))
+		response, err := client.Get("https://www.googleapis.com/oauth2/v2/userinfo")
+		if err != nil {
+			return err
+		}
+		body, err := ioutil.ReadAll(response.Body)
+		if err != nil {
+			return err
+		}
+		var email Email
+		err = json.Unmarshal(body, &email)
+		if err != nil {
+			return err
+		}
+		fmt.Println(email.Email)
+		fmt.Println("==============")
 
-	defer response.Body.Close()
-	body, err := ioutil.ReadAll(response.Body)
-	if err != nil {
-		return err
+		return nil
+	} else {
+		token, err := s.OauthConfigApple.Exchange(context.Background(), code)
+		if err != nil {
+			return err
+		}
+		email := token.Extra("email")
+		fmt.Println(email)
+		return nil
 	}
-	var email Email
-	err = json.Unmarshal(body, &email)
-	if err != nil {
-		return err
-	}
-	fmt.Println(email.Email)
-	fmt.Println("==============")
-	return nil
+	// client := oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(token))
+	// response, err := client.Get("https://www.googleapis.com/oauth2/v2/userinfo")
+	// if err != nil {
+	// 	return err
+	// }
+	// fmt.Println(response.Body)
+	// fmt.Println("././././")
+	// fmt.Println(response)
+
+	// defer response.Body.Close()
+	// body, err := ioutil.ReadAll(response.Body)
+	// if err != nil {
+	// 	return err
+	// }
+	// var email Email
+	// err = json.Unmarshal(body, &email)
+	// if err != nil {
+	// 	return err
+	// }
+	// fmt.Println(email.Email)
+	// fmt.Println("==============")
+	// return nil
 }

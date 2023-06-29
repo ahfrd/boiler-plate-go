@@ -7,14 +7,13 @@ import (
 	booksController "asia-quest/books/controller"
 	booksRepository "asia-quest/books/repository"
 	booksService "asia-quest/books/service"
+	"asia-quest/config"
 	"asia-quest/helpers"
 	"asia-quest/routes"
 	"fmt"
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
 )
 
 func init() {
@@ -25,20 +24,13 @@ func init() {
 func main() {
 	fmt.Println(os.Getenv("CLIENT_ID"))
 	fmt.Println(os.Getenv("REDIRECT"))
-	oauthConfig := oauth2.Config{
-		ClientID:     os.Getenv("CLIENT_ID"),
-		ClientSecret: os.Getenv("CLIENT_SECRET"),
-		RedirectURL:  os.Getenv("REDIRECT"),
-		Scopes: []string{
-			"https://www.googleapis.com/auth/userinfo.email",
-		},
-		Endpoint: google.Endpoint,
-	}
+	oauthConfigGoogle := config.GetOauthConfigGmail()
+	oauthConfigApple := config.GetOauthConfigApple()
 	router := gin.Default()
 	booksRepository := booksRepository.NewBooksRepository()
 	authRepository := authRepository.NewAuthRepository()
 	//Service
-	authService := authService.NewAuthService(&authRepository, &oauthConfig)
+	authService := authService.NewAuthService(&authRepository, &oauthConfigGoogle, &oauthConfigApple)
 	booksService := booksService.NewBooksService(&booksRepository)
 	//Controller
 	booksController := booksController.NewBooksController(&booksService)

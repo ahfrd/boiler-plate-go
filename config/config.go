@@ -19,7 +19,6 @@ func (config *configImpl) Get(key string) string {
 }
 
 func New(filenames ...string) Config {
-
 	err := godotenv.Load(filenames...)
 	helpers.PanicIfNeeded(err)
 	return &configImpl{}
