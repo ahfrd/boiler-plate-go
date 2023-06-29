@@ -7,8 +7,8 @@ import (
 )
 
 func SetUpAuthRoute(router *gin.Engine, booksController *controller.AuthController) {
-	v1 := router.Group("/api/v1/auth")
-	{
-		v1.POST("/login", booksController.Login)
-	}
+	router.POST("/login", booksController.Login)
+	router.GET("/oauth-login", booksController.OauthLogin)
+	router.GET("/callback", booksController.OauthCallback)
+	router.GET("/", booksController.PageMain)
 }
