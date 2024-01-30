@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetUpExampleRoute(router *gin.Engine, booksController *controller.ExampleController) {
-	router.POST("/login", booksController.Login)
+func SetUpExampleRoute(router *gin.Engine, exampleController *controller.ExampleController) {
+	router.POST("/login", exampleController.Login)
 
 }

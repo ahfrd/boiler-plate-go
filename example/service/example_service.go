@@ -11,9 +11,6 @@ import (
 type ExampleService struct {
 	AuthRepository entity.ExampleRepository
 }
-type Email struct {
-	Email string `json:"email"`
-}
 
 func NewExampleService(authRepository *entity.ExampleRepository) entity.ExampleService {
 	return &ExampleService{
