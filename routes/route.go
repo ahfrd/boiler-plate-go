@@ -1,28 +1,12 @@
 package routes
 
-// import (
-// 	"asia-quest/config"
-// 	"asia-quest/konsumen/controller"
-// 	"asia-quest/konsumen/repository"
-// 	"asia-quest/konsumen/service"
-// )
+import (
+	"example-boiler-plate/example/controller"
 
-// type ControllerEntity struct {
-// 	ControllerKonsumen controller.KonsumenController
-// }
+	"github.com/gin-gonic/gin"
+)
 
-// func InitController() *ControllerEntity {
-// 	//config
-// 	//Repository
-// 	konsumenRepository := repository.NewKonsumenRepository(&config.Database{})
-// 	//Service
-// 	konsumenService := service.NewKonsumenService(&konsumenRepository)
-// 	//Controller
-// 	konsumenController := controller.NewKonsumenController(&konsumenService)
+func SetUpExampleRoute(router *gin.Engine, booksController *controller.ExampleController) {
+	router.POST("/login", booksController.Login)
 
-// 	//Init
-// 	controller := &ControllerEntity{
-// 		ControllerKonsumen: konsumenController,
-// 	}
-// 	return controller
-// }
+}

@@ -1,17 +1,11 @@
 package main
 
 import (
-	authController "asia-quest/auth/controller"
-	authRepository "asia-quest/auth/repository"
-	authService "asia-quest/auth/service"
-	booksController "asia-quest/books/controller"
-	booksRepository "asia-quest/books/repository"
-	booksService "asia-quest/books/service"
-	"asia-quest/config"
-	"asia-quest/helpers"
-	"asia-quest/routes"
-	"fmt"
-	"os"
+	exampleController "example-boiler-plate/example/controller"
+	exampleRepository "example-boiler-plate/example/repository"
+	exampleService "example-boiler-plate/example/service"
+	"example-boiler-plate/helpers"
+	"example-boiler-plate/routes"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,20 +16,12 @@ func init() {
 
 }
 func main() {
-	fmt.Println(os.Getenv("CLIENT_ID"))
-	fmt.Println(os.Getenv("REDIRECT"))
-	oauthConfigGoogle := config.GetOauthConfigGmail()
-	oauthConfigApple := config.GetOauthConfigApple()
 	router := gin.Default()
-	booksRepository := booksRepository.NewBooksRepository()
-	authRepository := authRepository.NewAuthRepository()
+	ExampleRepository := exampleRepository.NewExampleRepository()
 	//Service
-	authService := authService.NewAuthService(&authRepository, &oauthConfigGoogle, &oauthConfigApple)
-	booksService := booksService.NewBooksService(&booksRepository)
+	ExampleService := exampleService.NewExampleService(&ExampleRepository)
 	//Controller
-	booksController := booksController.NewBooksController(&booksService)
-	authController := authController.NewAuthController(&authService)
-	routes.SetUpRoutesBooks(router, &booksController)
-	routes.SetUpAuthRoute(router, &authController)
+	ExampleController := exampleController.NewExampleController(&ExampleService)
+	routes.SetUpExampleRoute(router, &ExampleController)
 	router.Run(":8080")
 }

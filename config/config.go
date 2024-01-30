@@ -1,7 +1,7 @@
 package config
 
 import (
-	"asia-quest/helpers"
+	"example-boiler-plate/helpers"
 	"os"
 
 	"github.com/joho/godotenv"

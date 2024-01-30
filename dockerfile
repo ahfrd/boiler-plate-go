@@ -1,6 +1,6 @@
 FROM golang:1.19 as builder
 
-WORKDIR /go/src/github.com/ahfrd/asia-quest/
+WORKDIR /go/src/github.com/ahfrd/example-boiler-plate/
 ADD . .
 
 RUN go mod tidy
@@ -17,7 +17,7 @@ WORKDIR /app/
 RUN mkdir logs
 RUN mkdir config
 
-COPY --from=builder /go/src/github.com/ahfrd/asia-quest/main .
+COPY --from=builder /go/src/github.com/ahfrd/example-boiler-plate/main .
 
 RUN chmod -R 777 /app
 RUN chmod -R 755 config

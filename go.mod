@@ -1,4 +1,4 @@
-module asia-quest
+module example-boiler-plate
 
 go 1.19
 
