@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"example-boiler-plate/example/controller"
+	"example-boiler-plate/apps/controller"
 
 	"github.com/gin-gonic/gin"
 )

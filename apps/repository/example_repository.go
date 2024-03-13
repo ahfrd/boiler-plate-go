@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"example-boiler-plate/entity"
-	"example-boiler-plate/entity/request"
-	"example-boiler-plate/entity/response"
+	"example-boiler-plate/apps/entity"
+	"example-boiler-plate/apps/entity/request"
+	"example-boiler-plate/apps/entity/response"
 )
 
 type exampleRepository struct {

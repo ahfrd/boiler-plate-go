@@ -1,9 +1,9 @@
 package service
 
 import (
-	"example-boiler-plate/entity"
-	"example-boiler-plate/entity/request"
-	"example-boiler-plate/entity/response"
+	"example-boiler-plate/apps/entity"
+	"example-boiler-plate/apps/entity/request"
+	"example-boiler-plate/apps/entity/response"
 
 	"github.com/gin-gonic/gin"
 )

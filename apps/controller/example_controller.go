@@ -2,8 +2,8 @@ package controller
 
 import (
 	"encoding/json"
-	"example-boiler-plate/entity"
-	"example-boiler-plate/entity/request"
+	"example-boiler-plate/apps/entity"
+	"example-boiler-plate/apps/entity/request"
 	"example-boiler-plate/helpers"
 	"fmt"
 	"net/http"

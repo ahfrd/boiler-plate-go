@@ -1,9 +1,9 @@
 package main
 
 import (
-	exampleController "example-boiler-plate/example/controller"
-	exampleRepository "example-boiler-plate/example/repository"
-	exampleService "example-boiler-plate/example/service"
+	exampleController "example-boiler-plate/apps/controller"
+	exampleRepository "example-boiler-plate/apps/repository"
+	exampleService "example-boiler-plate/apps/service"
 	"example-boiler-plate/helpers"
 	"example-boiler-plate/routes"
 
