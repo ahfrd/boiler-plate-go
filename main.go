@@ -1,27 +1,24 @@
 package main
 
 import (
-	exampleController "example-boiler-plate/apps/controller"
-	exampleRepository "example-boiler-plate/apps/repository"
-	exampleService "example-boiler-plate/apps/service"
-	"example-boiler-plate/helpers"
-	"example-boiler-plate/routes"
-
-	"github.com/gin-gonic/gin"
+	"esb-code-assesment/cmd"
+	"esb-code-assesment/env"
+	"esb-code-assesment/infra/database"
+	"log"
+	"os"
 )
 
-func init() {
-	env := helpers.Env{}
-	env.StartingCheck()
-
-}
 func main() {
-	router := gin.Default()
-	ExampleRepository := exampleRepository.NewExampleRepository()
-	//Service
-	ExampleService := exampleService.NewExampleService(&ExampleRepository)
-	//Controller
-	ExampleController := exampleController.NewExampleController(&ExampleService)
-	routes.SetUpExampleRoute(router, &ExampleController)
-	router.Run(":8080")
+	di, err := env.NewENV("config.yaml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	if di.DB, di.Err = database.NewMySQLDB(di.Params); di.Err != nil {
+		// Handle with middleware here upon error
+		log.Fatal(di.Err)
+	}
+	cli := cmd.NewCLI(di, os.Args)
+	if cli.Start(); cli.Error() != nil {
+		log.Fatal(cli.Error())
+	}
 }
