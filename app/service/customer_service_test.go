@@ -1,11 +1,11 @@
 package service_test
 
 import (
+	mockModel "boiler-plate-rest/app/model/mock"
+	"boiler-plate-rest/app/model/request"
+	"boiler-plate-rest/app/model/response"
+	"boiler-plate-rest/app/service"
 	"errors"
-	mockModel "esb-code-assesment/app/model/mock"
-	"esb-code-assesment/app/model/request"
-	"esb-code-assesment/app/model/response"
-	"esb-code-assesment/app/service"
 	"net/http"
 	"net/http/httptest"
 	"testing"

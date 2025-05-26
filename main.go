@@ -1,9 +1,9 @@
 package main
 
 import (
-	"esb-code-assesment/cmd"
-	"esb-code-assesment/env"
-	"esb-code-assesment/infra/database"
+	"boiler-plate-rest/cmd"
+	"boiler-plate-rest/env"
+	"boiler-plate-rest/infra/database"
 	"log"
 	"os"
 )

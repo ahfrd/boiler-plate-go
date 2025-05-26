@@ -1,9 +1,9 @@
 package database
 
 import (
+	"boiler-plate-rest/env"
 	"database/sql"
 	"errors"
-	"esb-code-assesment/env"
 
 	_ "github.com/go-sql-driver/mysql"
 )

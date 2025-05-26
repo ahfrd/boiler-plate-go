@@ -1,13 +1,13 @@
 package controller_test
 
 import (
+	"boiler-plate-rest/app/controller"
+	"boiler-plate-rest/app/model/mock"
+	"boiler-plate-rest/app/model/request"
+	"boiler-plate-rest/app/model/response"
 	"bytes"
 	"encoding/json"
 	"errors"
-	"esb-code-assesment/app/controller"
-	"esb-code-assesment/app/model/mock"
-	"esb-code-assesment/app/model/request"
-	"esb-code-assesment/app/model/response"
 	"fmt"
 
 	"net/http"

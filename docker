@@ -1,6 +1,6 @@
 FROM golang:1.21 as builder
 
-WORKDIR /go/src/github.com/ahfrd/esb-code-assesment-assesment/
+WORKDIR /go/src/github.com/ahfrd/boiler-plate-rest-assesment/
 ADD . .
 
 RUN go mod tidy
@@ -17,7 +17,7 @@ WORKDIR /app/
 RUN mkdir logs
 RUN mkdir config
 
-COPY --from=builder /go/src/github.com/ahfrd/esb-code-assesment-assesment/main .
+COPY --from=builder /go/src/github.com/ahfrd/boiler-plate-rest-assesment/main .
 
 RUN chmod -R 777 /app
 RUN chmod -R 755 config

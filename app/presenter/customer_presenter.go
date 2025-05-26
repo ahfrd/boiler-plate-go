@@ -1,10 +1,10 @@
 package presenter
 
 import (
-	"esb-code-assesment/app/controller"
-	"esb-code-assesment/app/repository"
-	"esb-code-assesment/app/service"
-	"esb-code-assesment/env"
+	"boiler-plate-rest/app/controller"
+	"boiler-plate-rest/app/repository"
+	"boiler-plate-rest/app/service"
+	"boiler-plate-rest/env"
 
 	"github.com/gin-gonic/gin"
 )

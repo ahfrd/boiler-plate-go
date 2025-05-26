@@ -1,11 +1,11 @@
 package controller
 
 import (
+	"boiler-plate-rest/app/model/request"
+	"boiler-plate-rest/app/model/response"
+	"boiler-plate-rest/app/service"
+	"boiler-plate-rest/helpers"
 	"encoding/json"
-	"esb-code-assesment/app/model/request"
-	"esb-code-assesment/app/model/response"
-	"esb-code-assesment/app/service"
-	"esb-code-assesment/helpers"
 	"fmt"
 	"net/http"
 

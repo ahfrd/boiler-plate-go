@@ -1,4 +1,4 @@
-module esb-code-assesment
+module boiler-plate-rest
 
 go 1.21.6
 

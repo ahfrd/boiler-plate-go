@@ -1,9 +1,9 @@
 package repository
 
 import (
-	"esb-code-assesment/app/model/request"
-	"esb-code-assesment/app/model/response"
-	"esb-code-assesment/env"
+	"boiler-plate-rest/app/model/request"
+	"boiler-plate-rest/app/model/response"
+	"boiler-plate-rest/env"
 	"fmt"
 
 	"github.com/gin-gonic/gin"

@@ -1,12 +1,12 @@
 package service
 
 import (
+	"boiler-plate-rest/app/model/request"
+	"boiler-plate-rest/app/model/response"
+	"boiler-plate-rest/app/repository"
+	"boiler-plate-rest/helpers"
 	"encoding/json"
 	"errors"
-	"esb-code-assesment/app/model/request"
-	"esb-code-assesment/app/model/response"
-	"esb-code-assesment/app/repository"
-	"esb-code-assesment/helpers"
 	"fmt"
 
 	"github.com/gin-gonic/gin"

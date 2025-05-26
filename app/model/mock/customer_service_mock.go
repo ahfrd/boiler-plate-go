@@ -1,8 +1,8 @@
 package mock
 
 import (
-	"esb-code-assesment/app/model/request"
-	"esb-code-assesment/app/model/response"
+	"boiler-plate-rest/app/model/request"
+	"boiler-plate-rest/app/model/response"
 
 	"github.com/gin-gonic/gin"
 )

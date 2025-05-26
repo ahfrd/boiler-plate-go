@@ -1,10 +1,10 @@
 package network
 
 import (
+	"boiler-plate-rest/app/model/response"
+	"boiler-plate-rest/app/presenter"
+	"boiler-plate-rest/env"
 	"bytes"
-	"esb-code-assesment/app/model/response"
-	"esb-code-assesment/app/presenter"
-	"esb-code-assesment/env"
 	"fmt"
 	"net/http"
 	"runtime"
