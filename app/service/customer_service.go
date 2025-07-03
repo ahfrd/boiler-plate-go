@@ -5,6 +5,7 @@ import (
 	"boiler-plate-rest/app/model/response"
 	"boiler-plate-rest/app/repository"
 	"boiler-plate-rest/helpers"
+	"boiler-plate-rest/middleware"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -19,6 +20,7 @@ type (
 	CustomerService interface {
 		GetListCustomer(ctx *gin.Context, request *request.GetListCustomerRequest, uid string) (*response.GenericResponse, error)
 		AddCustomer(ctx *gin.Context, request *request.AddCustomerRequest, uid string) (*response.GenericResponse, error)
+		TestingGenerateJWT(ctx *gin.Context, uid string) (*response.GenericResponse, error)
 	}
 )
 
@@ -103,5 +105,31 @@ func (s *customerServiceImpl) AddCustomer(ctx *gin.Context, request *request.Add
 	res.Status = response.Success.Status()
 	res.Code = response.Success.Code()
 	res.Message = fmt.Sprintf(response.Success.Message(), " create Customer")
+	return &res, nil
+}
+
+func (s *customerServiceImpl) TestingGenerateJWT(ctx *gin.Context, uid string) (*response.GenericResponse, error) {
+	var res response.GenericResponse
+
+	claims := &middleware.MyClaims{
+		Username: "Test-doang-ini",
+	}
+
+	tokenString, err := middleware.GenerateJWT(claims)
+	if err != nil {
+		helpers.LogError(ctx, err.Error(), uid)
+		return &response.GenericResponse{
+			Code:    response.GeneralError.Code(),
+			Status:  response.GeneralError.Status(),
+			Message: fmt.Sprintf(response.GeneralError.Message(), err),
+		}, nil
+
+	}
+
+	res.Status = response.Success.Status()
+	res.Code = response.Success.Code()
+	res.Message = fmt.Sprintf(response.Success.Message(), " create Customer")
+	res.Data = tokenString
+	fmt.Println(res)
 	return &res, nil
 }

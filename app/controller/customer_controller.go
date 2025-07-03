@@ -113,3 +113,28 @@ func (c *CustomerController) AddCustomer(ctx *gin.Context) {
 	fmt.Println(logStop)
 	ctx.JSON(http.StatusOK, &response)
 }
+
+func (c *CustomerController) TestingGenerateJWT(ctx *gin.Context) {
+	requestId := guuid.New()
+
+	logStart := helpers.LogRequest(ctx, "", requestId.String())
+	fmt.Println(logStart)
+
+	response, err := c.CustomerService.TestingGenerateJWT(ctx, requestId.String())
+	if err != nil {
+		helpers.LogError(ctx, err.Error(), requestId.String())
+		ctx.AbortWithError(http.StatusBadRequest, err)
+		return
+	}
+
+	responseData, err := json.Marshal(response)
+	if err != nil {
+		helpers.LogError(ctx, err.Error(), requestId.String())
+		ctx.AbortWithError(http.StatusBadRequest, err)
+		return
+	}
+
+	logStop := helpers.LogResponse(ctx, string(responseData), requestId.String())
+	fmt.Println(logStop)
+	ctx.JSON(http.StatusOK, &response)
+}

@@ -2,8 +2,9 @@ package network
 
 import (
 	"boiler-plate-rest/app/model/response"
-	"boiler-plate-rest/app/presenter"
+	"boiler-plate-rest/app/wire"
 	"boiler-plate-rest/env"
+	"boiler-plate-rest/middleware"
 	"bytes"
 	"fmt"
 	"net/http"
@@ -16,7 +17,7 @@ func InitRoutesGin(env *env.Dependency) *gin.Engine {
 	rD := gin.New()
 	rD.Use(CORSMiddleware())
 	rD.Use(gin.CustomRecovery(recoverPanic))
-	rC := rD.Group("api/admin/v1/")
+	rC := rD.Group("api/v1/")
 	{
 		customerGroup(rC.Group("/customer"), env)
 
@@ -26,8 +27,9 @@ func InitRoutesGin(env *env.Dependency) *gin.Engine {
 }
 
 func customerGroup(group *gin.RouterGroup, env *env.Dependency) {
-	group.GET("/list-customer", presenter.GetListCustomer(env))
-	group.POST("/add-customer", presenter.AddCustomer(env))
+	group.GET("/generate-jwt", wire.TestingGenerateJWT(env))
+	group.GET("/list-customer", middleware.NewJWTMiddleware(), wire.GetListCustomer(env))
+	group.POST("/add-customer", middleware.NewJWTMiddleware(), wire.AddCustomer(env))
 
 }
 

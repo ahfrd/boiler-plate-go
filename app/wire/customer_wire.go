@@ -1,4 +1,4 @@
-package presenter
+package wire
 
 import (
 	"boiler-plate-rest/app/controller"
@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func mainCustomerPresenter(di *env.Dependency) *controller.CustomerController {
+func mainCustomerWire(di *env.Dependency) *controller.CustomerController {
 	customerRepository := repository.NewCustomerRepository(di)
 	customerService := service.NewCustomerService(customerRepository)
 	customerController := controller.NewCustomerController(&customerService)
@@ -18,12 +18,18 @@ func mainCustomerPresenter(di *env.Dependency) *controller.CustomerController {
 
 func GetListCustomer(env *env.Dependency) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		mainCustomerPresenter(env).GetListCustomer(ctx)
+		mainCustomerWire(env).GetListCustomer(ctx)
 	}
 }
 
 func AddCustomer(env *env.Dependency) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		mainCustomerPresenter(env).AddCustomer(ctx)
+		mainCustomerWire(env).AddCustomer(ctx)
+	}
+}
+
+func TestingGenerateJWT(env *env.Dependency) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		mainCustomerWire(env).TestingGenerateJWT(ctx)
 	}
 }
